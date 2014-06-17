@@ -23,12 +23,12 @@ namespace IMS
         {
             if (textBox_addNewCategory.Text.Trim().Length == 0)
             {
-                showErrorPopUp("Please enter a Category Name");
+                CommonUtilities.showErrorPopUp("Please enter a Category Name");
                 return;
             }
                 if (categoryExists(textBox_addNewCategory.Text.Trim().ToLower()))
                 {
-                    showErrorPopUp(textBox_addNewCategory.Text.Trim().ToLower()+" Already Exists");
+                    CommonUtilities.showErrorPopUp(textBox_addNewCategory.Text.Trim().ToLower() + " Already Exists");
                     return;
                 }
             
@@ -48,7 +48,7 @@ namespace IMS
 
             db.Categories.Add(newCategory);
             db.SaveChanges();
-            showSuccessPopup(textBox_addNewCategory.Text.Trim().ToLower() + "Category Added Successfully");
+            CommonUtilities.showSuccessPopup(textBox_addNewCategory.Text.Trim().ToLower() + "Category Added Successfully");
         }
 
         private void ProductsCategories_Load(object sender, EventArgs e)
@@ -73,25 +73,6 @@ namespace IMS
             return exists;
         }
 
-        //private void comboBox_existingProductCategories_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //   Category selectedCategory = comboBox_existingProductCategories.SelectedItem as Category;
-
-        //    comboBox_ProductsInCategory.DataSource = null;
-          
-        //    if (db.Products.Where(x => x.CategoryId == selectedCategory.CategoryId).Count() != 0)
-        //    {
-        //       List<Product> productsOfSelectedCategory = db.Products.Where(x => x.CategoryId == selectedCategory.CategoryId).ToList();
-
-        //       comboBox_ProductsInCategory.DataSource = productsOfSelectedCategory;
-        //       comboBox_ProductsInCategory.ValueMember = "ProductId";
-        //       comboBox_ProductsInCategory.DisplayMember = "ProductName";
-        //    }
-           
-        //   label5.Text = "Products in " + selectedCategory.CategoryName;
-
-        //}
-
         private void button_refreshCategories_Click(object sender, EventArgs e)
         {
             setDropDownValues(comboBox_existingCategories);
@@ -114,14 +95,14 @@ namespace IMS
         {
             if (textBox_newProduct.Text.Trim().Length == 0)
             {
-                showErrorPopUp("Please Enter a Product Name");
+                CommonUtilities.showErrorPopUp("Please Enter a Product Name");
                 return;
             }
 
             Category selectedCategory = comboBox_existingProductCategories.SelectedItem as Category;
             if (db.Products.Where(x => x.CategoryId == selectedCategory.CategoryId && x.ProductName.ToLower().Equals(textBox_newProduct.Text.Trim().ToLower())).Count() > 0)
             {
-                showErrorPopUp(textBox_newProduct.Text.Trim().ToLower() + " Already Available Under " + selectedCategory.CategoryName);
+                CommonUtilities.showErrorPopUp(textBox_newProduct.Text.Trim().ToLower() + " Already Available Under " + selectedCategory.CategoryName);
                 return;
             }
 
@@ -145,21 +126,8 @@ namespace IMS
             db.Products.Add(newProduct);
             db.SaveChanges();
 
-            showSuccessPopup(textBox_newProduct.Text.Trim().ToLower() + " Added Successfully Under " + selectedCategory.CategoryName);
+            CommonUtilities.showSuccessPopup(textBox_newProduct.Text.Trim().ToLower() + " Added Successfully Under " + selectedCategory.CategoryName);
 
-        }
-
-
-
-        void showSuccessPopup(String message)
-        {
-            MessageBox.Show(message, "Success");
-        }
-
-
-        void showErrorPopUp(String message)
-        {
-            MessageBox.Show(message, "Error");
         }
 
         private void comboBox_modifyExistingCategories_SelectedIndexChanged(object sender, EventArgs e)
@@ -176,7 +144,7 @@ namespace IMS
 
             if(categoryExists(textBox_modifyRenameAs.Text.Trim().ToLowerInvariant()))
             {
-                showErrorPopUp(selected.CategoryName+" Already Exists");
+                CommonUtilities.showErrorPopUp(selected.CategoryName + " Already Exists");
                 return;
             }
 
@@ -185,7 +153,7 @@ namespace IMS
 
             db.SaveChanges();
 
-            showSuccessPopup("Renamed " + categoryName + " As " + textBox_modifyRenameAs.Text.Trim().ToLowerInvariant());
+            CommonUtilities.showSuccessPopup("Renamed " + categoryName + " As " + textBox_modifyRenameAs.Text.Trim().ToLowerInvariant());
 
         }
 
@@ -224,7 +192,7 @@ namespace IMS
 
             if(textBox_renameProduct.Text.Trim().Length == 0)
             {
-                showErrorPopUp("Please enter a valid value");
+                CommonUtilities.showErrorPopUp("Please enter a valid value");
             }
 
             Category selectedCategory = comboBox_editCategories.SelectedItem as Category;
@@ -235,7 +203,7 @@ namespace IMS
 
                 if (productsOfSelectedCategory.Contains(textBox_renameProduct.Text.Trim().ToLower()))
                 {
-                    showErrorPopUp(textBox_renameProduct.Text.Trim().ToLower() + " Already Exists ");
+                    CommonUtilities.showErrorPopUp(textBox_renameProduct.Text.Trim().ToLower() + " Already Exists ");
                     return;
                 }
 
@@ -246,7 +214,7 @@ namespace IMS
                 editedProduct.ProductName = textBox_renameProduct.Text.Trim().ToLower();
 
                 db.SaveChanges();
-                showSuccessPopup("Updated " + productName + " As " + textBox_renameProduct.Text.Trim().ToLower());
+                CommonUtilities.showSuccessPopup("Updated " + productName + " As " + textBox_renameProduct.Text.Trim().ToLower());
             }
         }
 
@@ -283,7 +251,7 @@ namespace IMS
             {
                 if (textBox_newProduct.Text.Trim().Length == 0)
                 {
-                    MessageBox.Show("Please Enter a Product name","Error");
+                    CommonUtilities.showErrorPopUp("Please Enter a Product Name");
                     checkBox_addProductDetails.Checked = false;
                     return;
                 }
@@ -295,7 +263,7 @@ namespace IMS
 
                 if (productNames.Contains(textBox_newProduct.Text.Trim().ToLower()))
                 {
-                    showErrorPopUp(textBox_newProduct.Text.Trim().ToLower() + " Already Exists");
+                    CommonUtilities.showErrorPopUp(textBox_newProduct.Text.Trim().ToLower() + " Already Exists");
                     return;
                 }
                

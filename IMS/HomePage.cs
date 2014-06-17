@@ -36,7 +36,11 @@ namespace IMS
             List<CustomerDetail> customers = CommonUtilities.getSearchResults(customerName, lastName, balance);
 
             if (customers.Count == 0)
+
+            { 
                 MessageBox.Show("No Records Found");
+                return;
+            }
             else
                 dataGridView_users.DataSource = customers;
 
@@ -61,5 +65,13 @@ namespace IMS
             ProductsCategories masterPage = new ProductsCategories();
             masterPage.Show();
         }
+
+        private void linkLabel_categoriesAndProducts_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            CategoriesAndProducts productCategories = new CategoriesAndProducts();
+            productCategories.Show();
+        }
+
+       
     }
 }

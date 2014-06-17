@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Forms;
 
 namespace IMS
 {
@@ -33,8 +34,20 @@ namespace IMS
             {
                 db = new IMSEntities();
             }
-        return db;
+         return db;
         }
+
+        public static void showSuccessPopup(String message)
+        {
+            MessageBox.Show(message, "Success");
+        }
+
+
+        public static void showErrorPopUp(String message)
+        {
+            MessageBox.Show(message, "Error");
+        }
+
     }
 
 

@@ -55,6 +55,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="AddNewUser.Designer.cs" />
+    <Compile Include="CategoriesAndProducts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CategoriesAndProducts.Designer.cs">
+      <DependentUpon>CategoriesAndProducts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Category.cs">
       <DependentUpon>IMS.tt</DependentUpon>
     </Compile>
@@ -104,6 +110,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AddNewUser.resx" />
+    <EmbeddedResource Include="CategoriesAndProducts.resx">
+      <DependentUpon>CategoriesAndProducts.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="HomePage.resx">
       <DependentUpon>HomePage.cs</DependentUpon>
     </EmbeddedResource>

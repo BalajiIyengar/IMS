@@ -38,8 +38,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView_users = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.linkLabel_addProductsAndCategories = new System.Windows.Forms.LinkLabel();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
+            this.linkLabel_categoriesAndProducts = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_users)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -59,7 +60,7 @@
             this.groupBox1.Size = new System.Drawing.Size(339, 117);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            this.groupBox1.Text = "Search Users";
             // 
             // button_search
             // 
@@ -121,6 +122,9 @@
             // 
             // dataGridView_users
             // 
+            this.dataGridView_users.AllowUserToAddRows = false;
+            this.dataGridView_users.AllowUserToDeleteRows = false;
+            this.dataGridView_users.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView_users.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView_users.Location = new System.Drawing.Point(12, 135);
             this.dataGridView_users.Name = "dataGridView_users";
@@ -130,6 +134,7 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.linkLabel_categoriesAndProducts);
             this.groupBox2.Controls.Add(this.linkLabel_addProductsAndCategories);
             this.groupBox2.Controls.Add(this.linkLabel1);
             this.groupBox2.Location = new System.Drawing.Point(1101, 12);
@@ -137,12 +142,23 @@
             this.groupBox2.Size = new System.Drawing.Size(153, 453);
             this.groupBox2.TabIndex = 8;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "groupBox2";
+            this.groupBox2.Text = "Links";
+            // 
+            // linkLabel_addProductsAndCategories
+            // 
+            this.linkLabel_addProductsAndCategories.AutoSize = true;
+            this.linkLabel_addProductsAndCategories.Location = new System.Drawing.Point(6, 104);
+            this.linkLabel_addProductsAndCategories.Name = "linkLabel_addProductsAndCategories";
+            this.linkLabel_addProductsAndCategories.Size = new System.Drawing.Size(145, 13);
+            this.linkLabel_addProductsAndCategories.TabIndex = 1;
+            this.linkLabel_addProductsAndCategories.TabStop = true;
+            this.linkLabel_addProductsAndCategories.Text = "Add Products and Categories";
+            this.linkLabel_addProductsAndCategories.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_addProductsAndCategories_LinkClicked);
             // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(53, 34);
+            this.linkLabel1.Location = new System.Drawing.Point(37, 34);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(76, 13);
             this.linkLabel1.TabIndex = 0;
@@ -150,16 +166,16 @@
             this.linkLabel1.Text = "Add New User";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
-            // linkLabel_addProductsAndCategories
+            // linkLabel_categoriesAndProducts
             // 
-            this.linkLabel_addProductsAndCategories.AutoSize = true;
-            this.linkLabel_addProductsAndCategories.Location = new System.Drawing.Point(8, 123);
-            this.linkLabel_addProductsAndCategories.Name = "linkLabel_addProductsAndCategories";
-            this.linkLabel_addProductsAndCategories.Size = new System.Drawing.Size(145, 13);
-            this.linkLabel_addProductsAndCategories.TabIndex = 1;
-            this.linkLabel_addProductsAndCategories.TabStop = true;
-            this.linkLabel_addProductsAndCategories.Text = "Add Products and Categories";
-            this.linkLabel_addProductsAndCategories.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_addProductsAndCategories_LinkClicked);
+            this.linkLabel_categoriesAndProducts.AutoSize = true;
+            this.linkLabel_categoriesAndProducts.Location = new System.Drawing.Point(4, 189);
+            this.linkLabel_categoriesAndProducts.Name = "linkLabel_categoriesAndProducts";
+            this.linkLabel_categoriesAndProducts.Size = new System.Drawing.Size(149, 13);
+            this.linkLabel_categoriesAndProducts.TabIndex = 2;
+            this.linkLabel_categoriesAndProducts.TabStop = true;
+            this.linkLabel_categoriesAndProducts.Text = "View Categories and Products";
+            this.linkLabel_categoriesAndProducts.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_categoriesAndProducts_LinkClicked);
             // 
             // HomePage
             // 
@@ -170,7 +186,7 @@
             this.Controls.Add(this.dataGridView_users);
             this.Controls.Add(this.groupBox1);
             this.Name = "HomePage";
-            this.Text = "FirstName";
+            this.Text = "HomePage";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_users)).EndInit();
@@ -194,6 +210,7 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.LinkLabel linkLabel_addProductsAndCategories;
+        private System.Windows.Forms.LinkLabel linkLabel_categoriesAndProducts;
     }
 }
 
