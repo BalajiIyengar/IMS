@@ -20,6 +20,7 @@ namespace IMS
         public bool isDiscontinued { get; set; }
         public long Quantity { get; set; }
         public string Product_Details { get; set; }
+        public Nullable<long> Cost { get; set; }
     
         public virtual Category Category { get; set; }
     }

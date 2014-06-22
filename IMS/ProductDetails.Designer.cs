@@ -35,6 +35,7 @@
             this.richTextBox_productDescription = new System.Windows.Forms.RichTextBox();
             this.textBox_quantity = new System.Windows.Forms.TextBox();
             this.button_addProductDetails = new System.Windows.Forms.Button();
+            this.button_editProduct = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -97,11 +98,23 @@
             this.button_addProductDetails.UseVisualStyleBackColor = true;
             this.button_addProductDetails.Click += new System.EventHandler(this.button_addProductDetails_Click);
             // 
+            // button_editProduct
+            // 
+            this.button_editProduct.Location = new System.Drawing.Point(173, 174);
+            this.button_editProduct.Name = "button_editProduct";
+            this.button_editProduct.Size = new System.Drawing.Size(129, 23);
+            this.button_editProduct.TabIndex = 9;
+            this.button_editProduct.Text = "Edit Product";
+            this.button_editProduct.UseVisualStyleBackColor = true;
+            this.button_editProduct.Visible = false;
+            this.button_editProduct.Click += new System.EventHandler(this.button_editProduct_Click);
+            // 
             // ProductDetails
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(503, 295);
+            this.Controls.Add(this.button_editProduct);
             this.Controls.Add(this.button_addProductDetails);
             this.Controls.Add(this.textBox_quantity);
             this.Controls.Add(this.richTextBox_productDescription);
@@ -110,6 +123,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Name = "ProductDetails";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ProductDetails";
             this.Load += new System.EventHandler(this.ProductDetails_Load);
             this.ResumeLayout(false);
@@ -126,5 +140,6 @@
         private System.Windows.Forms.RichTextBox richTextBox_productDescription;
         private System.Windows.Forms.TextBox textBox_quantity;
         private System.Windows.Forms.Button button_addProductDetails;
+        private System.Windows.Forms.Button button_editProduct;
     }
 }

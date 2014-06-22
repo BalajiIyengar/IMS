@@ -4,23 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="IMSModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+      <Schema Namespace="IMSModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
         <EntityContainer Name="IMSModelStoreContainer">
           <EntitySet Name="Categories" EntityType="IMSModel.Store.Categories" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="CustomerDetails" EntityType="IMSModel.Store.CustomerDetails" store:Type="Tables" Schema="dbo" />
-          <EntitySet Name="DailyPurchase" EntityType="IMSModel.Store.DailyPurchase" store:Type="Tables" store:Schema="dbo" store:Name="DailyPurchase">
-            <DefiningQuery>SELECT 
-      [DailyPurchase].[CustomerId] AS [CustomerId], 
-      [DailyPurchase].[DateOfPurchase] AS [DateOfPurchase], 
-      [DailyPurchase].[PurchaseAmount] AS [PurchaseAmount], 
-      [DailyPurchase].[ItemsPurchased] AS [ItemsPurchased]
-      FROM [dbo].[DailyPurchase] AS [DailyPurchase]</DefiningQuery>
-          </EntitySet>
+          <EntitySet Name="DailyPurchases" EntityType="IMSModel.Store.DailyPurchases" store:Type="Tables" Schema="dbo" />
           <EntitySet Name="Product" EntityType="IMSModel.Store.Product" store:Type="Tables" Schema="dbo" />
-          <AssociationSet Name="FK_DailyPurchase_CustomerDetails" Association="IMSModel.Store.FK_DailyPurchase_CustomerDetails">
-            <End Role="CustomerDetails" EntitySet="CustomerDetails" />
-            <End Role="DailyPurchase" EntitySet="DailyPurchase" />
-          </AssociationSet>
+          <EntitySet Name="UserPayment" EntityType="IMSModel.Store.UserPayment" store:Type="Tables" Schema="dbo" />
           <AssociationSet Name="FK_Product_Categories" Association="IMSModel.Store.FK_Product_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Product" EntitySet="Product" />
@@ -47,20 +37,18 @@
           <Property Name="EmailId" Type="varchar" MaxLength="50" />
           <Property Name="Balance" Type="bigint" />
         </EntityType>
-        <!--Errors Found During Generation:
-      warning 6002: The table/view 'IMS.dbo.DailyPurchase' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.
-      -->
-        <EntityType Name="DailyPurchase">
+        <EntityType Name="DailyPurchases">
           <Key>
             <PropertyRef Name="CustomerId" />
-            <PropertyRef Name="DateOfPurchase" />
-            <PropertyRef Name="PurchaseAmount" />
-            <PropertyRef Name="ItemsPurchased" />
+            <PropertyRef Name="PurchaseDate" />
+            <PropertyRef Name="PurchaseTime" />
           </Key>
           <Property Name="CustomerId" Type="bigint" Nullable="false" />
-          <Property Name="DateOfPurchase" Type="datetime" Nullable="false" />
-          <Property Name="PurchaseAmount" Type="bigint" Nullable="false" />
-          <Property Name="ItemsPurchased" Type="varchar" Nullable="false" MaxLength="500" />
+          <Property Name="PurchaseDate" Type="datetime" Nullable="false" />
+          <Property Name="PurchaseTime" Type="time" Nullable="false" />
+          <Property Name="BillDescription" Type="varchar" MaxLength="500" />
+          <Property Name="UserPayment" Type="bigint" />
+          <Property Name="BillAmount" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -73,19 +61,20 @@
           <Property Name="isDiscontinued" Type="bit" Nullable="false" />
           <Property Name="Quantity" Type="bigint" Nullable="false" />
           <Property Name="Product Details" Type="varchar" MaxLength="500" />
+          <Property Name="Cost" Type="bigint" />
         </EntityType>
-        <Association Name="FK_DailyPurchase_CustomerDetails">
-          <End Role="CustomerDetails" Type="IMSModel.Store.CustomerDetails" Multiplicity="1" />
-          <End Role="DailyPurchase" Type="IMSModel.Store.DailyPurchase" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CustomerDetails">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="DailyPurchase">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="UserPayment">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+            <PropertyRef Name="PaymentDate" />
+            <PropertyRef Name="PaymentTime" />
+          </Key>
+          <Property Name="CustomerId" Type="bigint" Nullable="false" />
+          <Property Name="PaymentDate" Type="datetime" Nullable="false" />
+          <Property Name="PaymentTime" Type="time" Nullable="false" />
+          <Property Name="PaymentMethod" Type="varchar" Nullable="false" MaxLength="1001" />
+          <Property Name="Amount" Type="bigint" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Product_Categories">
           <End Role="Categories" Type="IMSModel.Store.Categories" Multiplicity="1" />
           <End Role="Product" Type="IMSModel.Store.Product" Multiplicity="*" />
@@ -98,22 +87,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="IMSModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
         <EntityContainer Name="IMSEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Categories" EntityType="IMSModel.Category" />
           <EntitySet Name="CustomerDetails" EntityType="IMSModel.CustomerDetail" />
-          <EntitySet Name="DailyPurchases" EntityType="IMSModel.DailyPurchase" />
+          <EntitySet Name="DailyPurchases" EntityType="IMSModel.DailyPurchas" />
           <EntitySet Name="Products" EntityType="IMSModel.Product" />
+          <EntitySet Name="UserPayments" EntityType="IMSModel.UserPayment" />
           <AssociationSet Name="FK_Product_Categories" Association="IMSModel.FK_Product_Categories">
             <End Role="Categories" EntitySet="Categories" />
             <End Role="Product" EntitySet="Products" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DailyPurchase_CustomerDetails" Association="IMSModel.FK_DailyPurchase_CustomerDetails">
-            <End Role="CustomerDetails" EntitySet="CustomerDetails" />
-            <End Role="DailyPurchase" EntitySet="DailyPurchases" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Category">
@@ -137,20 +124,19 @@
           <Property Name="PhoneNumber" Type="String" MaxLength="12" Unicode="false" FixedLength="false" />
           <Property Name="EmailId" Type="String" MaxLength="50" Unicode="false" FixedLength="false" />
           <Property Name="Balance" Type="Int64" />
-          <NavigationProperty Name="DailyPurchases" Relationship="IMSModel.FK_DailyPurchase_CustomerDetails" FromRole="CustomerDetails" ToRole="DailyPurchase" />
         </EntityType>
-        <EntityType Name="DailyPurchase">
+        <EntityType Name="DailyPurchas">
           <Key>
             <PropertyRef Name="CustomerId" />
-            <PropertyRef Name="DateOfPurchase" />
-            <PropertyRef Name="PurchaseAmount" />
-            <PropertyRef Name="ItemsPurchased" />
+            <PropertyRef Name="PurchaseDate" />
+            <PropertyRef Name="PurchaseTime" />
           </Key>
           <Property Name="CustomerId" Type="Int64" Nullable="false" />
-          <Property Name="DateOfPurchase" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="PurchaseAmount" Type="Int64" Nullable="false" />
-          <Property Name="ItemsPurchased" Type="String" Nullable="false" MaxLength="500" Unicode="false" FixedLength="false" />
-          <NavigationProperty Name="CustomerDetail" Relationship="IMSModel.FK_DailyPurchase_CustomerDetails" FromRole="DailyPurchase" ToRole="CustomerDetails" />
+          <Property Name="PurchaseDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PurchaseTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="BillDescription" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
+          <Property Name="UserPayment" Type="Int64" />
+          <Property Name="BillAmount" Type="Int64" Nullable="false" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -161,9 +147,22 @@
           <Property Name="CategoryId" Type="Int64" Nullable="false" />
           <Property Name="ProductName" Type="String" Nullable="false" MaxLength="100" Unicode="false" FixedLength="false" />
           <Property Name="isDiscontinued" Type="Boolean" Nullable="false" />
+          <Property Name="Quantity" Type="Int64" Nullable="false" />
+          <Property Name="Product_Details" Type="String" MaxLength="500" Unicode="false" FixedLength="false" />
+          <Property Name="Cost" Type="Int64" />
           <NavigationProperty Name="Category" Relationship="IMSModel.FK_Product_Categories" FromRole="Product" ToRole="Categories" />
-          <Property Type="Int64" Name="Quantity" Nullable="false" />
-          <Property Type="String" Name="Product_Details" MaxLength="500" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="UserPayment">
+          <Key>
+            <PropertyRef Name="CustomerId" />
+            <PropertyRef Name="PaymentDate" />
+            <PropertyRef Name="PaymentTime" />
+          </Key>
+          <Property Name="CustomerId" Type="Int64" Nullable="false" />
+          <Property Name="PaymentDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PaymentTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="PaymentMethod" Type="String" Nullable="false" MaxLength="1001" Unicode="false" FixedLength="false" />
+          <Property Name="Amount" Type="Int64" Nullable="false" />
         </EntityType>
         <Association Name="FK_Product_Categories">
           <End Role="Categories" Type="IMSModel.Category" Multiplicity="1" />
@@ -174,18 +173,6 @@
             </Principal>
             <Dependent Role="Product">
               <PropertyRef Name="CategoryId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DailyPurchase_CustomerDetails">
-          <End Role="CustomerDetails" Type="IMSModel.CustomerDetail" Multiplicity="1" />
-          <End Role="DailyPurchase" Type="IMSModel.DailyPurchase" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CustomerDetails">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="DailyPurchase">
-              <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -219,24 +206,38 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="DailyPurchases">
-            <EntityTypeMapping TypeName="IMSModel.DailyPurchase">
-              <MappingFragment StoreEntitySet="DailyPurchase">
+            <EntityTypeMapping TypeName="IMSModel.DailyPurchas">
+              <MappingFragment StoreEntitySet="DailyPurchases">
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="DateOfPurchase" ColumnName="DateOfPurchase" />
-                <ScalarProperty Name="PurchaseAmount" ColumnName="PurchaseAmount" />
-                <ScalarProperty Name="ItemsPurchased" ColumnName="ItemsPurchased" />
+                <ScalarProperty Name="PurchaseDate" ColumnName="PurchaseDate" />
+                <ScalarProperty Name="PurchaseTime" ColumnName="PurchaseTime" />
+                <ScalarProperty Name="BillDescription" ColumnName="BillDescription" />
+                <ScalarProperty Name="UserPayment" ColumnName="UserPayment" />
+                <ScalarProperty Name="BillAmount" ColumnName="BillAmount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="IMSModel.Product">
               <MappingFragment StoreEntitySet="Product">
-                <ScalarProperty Name="Product_Details" ColumnName="Product Details" />
-                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
                 <ScalarProperty Name="ProductName" ColumnName="ProductName" />
                 <ScalarProperty Name="isDiscontinued" ColumnName="isDiscontinued" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Product_Details" ColumnName="Product Details" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserPayments">
+            <EntityTypeMapping TypeName="IMSModel.UserPayment">
+              <MappingFragment StoreEntitySet="UserPayment">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="PaymentTime" ColumnName="PaymentTime" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

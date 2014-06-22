@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.textBox_firstName = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.textBox_EmailId = new System.Windows.Forms.TextBox();
@@ -188,7 +189,7 @@
             this.Name = "AddNewUser";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "AddNewUser";
-            this.Load += new System.EventHandler(this.AddNewUser_Load);
+           // this.Load += new System.EventHandler(this.AddNewUser_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -48,6 +48,12 @@ namespace IMS
 
             db.Categories.Add(newCategory);
             db.SaveChanges();
+            
+            setDropDownValues(comboBox_existingCategories);
+            setDropDownValues(comboBox_modifyExistingCategories);
+            setDropDownValues(comboBox_existingProductCategories);
+            setDropDownValues(comboBox_editCategories);
+
             CommonUtilities.showSuccessPopup(textBox_addNewCategory.Text.Trim().ToLower() + "Category Added Successfully");
         }
 
@@ -108,10 +114,6 @@ namespace IMS
 
             long lastProductId = 0;
 
-            //if (db.Products.Count() != 0)
-            //    lastProductId = db.Products.Max(x=>x.ProductId);
-
-
             if (db.Products.Where(x => x.CategoryId == selectedCategory.CategoryId).Count() > 0)
                 lastProductId = db.Products.Where(x => x.CategoryId == selectedCategory.CategoryId).Max(x => x.ProductId);
 
@@ -125,6 +127,9 @@ namespace IMS
             
             db.Products.Add(newProduct);
             db.SaveChanges();
+
+            setDropDownValues(comboBox_existingProductCategories);
+            setDropDownValues(comboBox_editCategories);
 
             CommonUtilities.showSuccessPopup(textBox_newProduct.Text.Trim().ToLower() + " Added Successfully Under " + selectedCategory.CategoryName);
 
@@ -152,6 +157,11 @@ namespace IMS
             newCategory.CategoryName = textBox_modifyRenameAs.Text.Trim().ToLowerInvariant();
 
             db.SaveChanges();
+
+            setDropDownValues(comboBox_existingCategories);
+            setDropDownValues(comboBox_modifyExistingCategories);
+            setDropDownValues(comboBox_existingProductCategories);
+            setDropDownValues(comboBox_editCategories);
 
             CommonUtilities.showSuccessPopup("Renamed " + categoryName + " As " + textBox_modifyRenameAs.Text.Trim().ToLowerInvariant());
 
@@ -214,6 +224,10 @@ namespace IMS
                 editedProduct.ProductName = textBox_renameProduct.Text.Trim().ToLower();
 
                 db.SaveChanges();
+
+                setDropDownValues(comboBox_editCategories);
+                setDropDownValues(comboBox_existingProductCategories);
+
                 CommonUtilities.showSuccessPopup("Updated " + productName + " As " + textBox_renameProduct.Text.Trim().ToLower());
             }
         }
@@ -269,13 +283,91 @@ namespace IMS
                
                 Hashtable productInfo = new Hashtable();
                 productInfo["CategoryId"] = selectedCategory.CategoryId;
-                productInfo["ProductId"] = selectedProduct.ProductId;
                 productInfo["ProductName"] = textBox_newProduct.Text.Trim().ToLower();
 
                 ProductDetails productDetails = new ProductDetails();
                 productDetails.setProductName(productInfo);
 
                 productDetails.Show();
+            }
+        }
+
+        private void checkBox_addCategory_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox_addCategory.Checked)
+                groupBox_category.Visible = true;
+
+            if (!checkBox_addCategory.Checked)
+                groupBox_category.Visible = false;
+        }
+
+        private void checkBox_addProduct_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox_addProduct.Checked)
+            {
+                groupBox_category.Visible = false;
+                groupBox_product.Visible = true;
+                checkBox_addCategory.Checked = false;
+            }
+
+            if (!checkBox_addProduct.Checked)
+                groupBox_product.Visible = false;
+        }
+
+        private void linkLabel_deleteProduct_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Category selectedCategory = comboBox_existingProductCategories.SelectedItem as Category;
+            Product selectedProduct = comboBox_ProductsInCategory.SelectedItem as Product;
+
+            if (selectedCategory != null && selectedProduct != null)
+            {
+                Product markedForDeletionProduct = db.Products.Where(x => x.CategoryId == selectedCategory.CategoryId && x.ProductId == selectedProduct.ProductId).Single();
+
+                db.Products.Remove(markedForDeletionProduct);
+                db.SaveChanges();
+                setDropDownValues(comboBox_existingProductCategories);
+                CommonUtilities.showSuccessPopup(selectedProduct.ProductName + " Successfully Deleted");
+            }
+        }
+
+        private void linkLabel_deleteCategory_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Category selectedCategory = comboBox_existingCategories.SelectedItem as Category;
+
+            if (db.Products.Where(x => x.CategoryId == selectedCategory.CategoryId).Count() > 0)
+            { 
+                long count = db.Products.Where(x => x.CategoryId == selectedCategory.CategoryId).Count();
+                CommonUtilities.showErrorPopUp(selectedCategory.CategoryName + " has " + count + " Product(s).\nPlease Delete the Products First");
+                return;
+            }
+
+           db.Categories.Remove(db.Categories.Where(x => x.CategoryId == selectedCategory.CategoryId).Single());
+           db.SaveChanges();
+          
+           setDropDownValues(comboBox_existingCategories);
+           CommonUtilities.showSuccessPopup("Successfully Deleted " + selectedCategory.CategoryName);
+        }
+
+        private void linkLabel_editProduct_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+              Category selectedCategory = comboBox_existingProductCategories.SelectedItem as Category;
+              Product selectedProduct = comboBox_ProductsInCategory.SelectedItem as Product;
+
+            if (selectedCategory != null && selectedProduct != null)
+            {
+                Product editProduct = db.Products.Where(x => x.CategoryId == selectedCategory.CategoryId && x.ProductId == selectedProduct.ProductId).Single();
+
+                Hashtable productDetails = new Hashtable();
+                productDetails["CategoryId"] = selectedCategory.CategoryId ;
+                productDetails["ProductId"] = selectedProduct.ProductId;
+                productDetails["ProductName"] = selectedProduct.ProductName;
+                productDetails["ToEdit"] = true;
+
+                ProductDetails details = new ProductDetails();
+                details.setProductName(productDetails);
+
+
+                details.Show();
             }
         }
 

@@ -12,13 +12,12 @@ namespace IMS
     using System;
     using System.Collections.Generic;
     
-    public partial class DailyPurchase
+    public partial class UserPayment
     {
         public long CustomerId { get; set; }
-        public System.DateTime DateOfPurchase { get; set; }
-        public long PurchaseAmount { get; set; }
-        public string ItemsPurchased { get; set; }
-    
-        public virtual CustomerDetail CustomerDetail { get; set; }
+        public System.DateTime PaymentDate { get; set; }
+        public System.TimeSpan PaymentTime { get; set; }
+        public string PaymentMethod { get; set; }
+        public long Amount { get; set; }
     }
 }

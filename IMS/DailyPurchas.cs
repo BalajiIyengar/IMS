@@ -12,15 +12,13 @@ namespace IMS
     using System;
     using System.Collections.Generic;
     
-    public partial class CustomerDetail
+    public partial class DailyPurchas
     {
         public long CustomerId { get; set; }
-        public string CustomerName { get; set; }
-        public string Address { get; set; }
-        public Nullable<long> Deposit { get; set; }
-        public string LastName { get; set; }
-        public string PhoneNumber { get; set; }
-        public string EmailId { get; set; }
-        public Nullable<long> Balance { get; set; }
+        public System.DateTime PurchaseDate { get; set; }
+        public System.TimeSpan PurchaseTime { get; set; }
+        public string BillDescription { get; set; }
+        public Nullable<long> UserPayment { get; set; }
+        public long BillAmount { get; set; }
     }
 }

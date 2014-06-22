@@ -21,15 +21,12 @@ namespace IMS
          * id is required to pre-populate the fields on this form.*/
         int selectedCustomerId;
         
-        public AddNewUser()
-        {
-            InitializeComponent();
-        }
+        //public AddNewUser()
+        //{
+        //    InitializeComponent();
+        //}
         
-        private void AddNewUser_Load(object sender, EventArgs e)
-        {
-
-        }
+        
                
         /// <summary>
         /// Pre-populates the form fields, with the values pertaining to the Customer having id as 'selectedCustomerId'
@@ -210,5 +207,39 @@ namespace IMS
         private void AddNewMaster_FormClosed(object sender, FormClosedEventArgs e)
         {
         }
+
+        //private void InitializeComponent()
+        //{
+        //    this.SuspendLayout();
+        //    // 
+        //    // AddNewUser
+        //    // 
+        //    this.ClientSize = new System.Drawing.Size(284, 261);
+        //    this.Name = "AddNewUser";
+        //    this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+        //    this.Load += new System.EventHandler(this.AddNewUser_Load);
+        //    this.ResumeLayout(false);
+
+        //}
+
+        private void AddNewUser_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        //private void InitializeComponent()
+        //{
+        //    this.SuspendLayout();
+        //    // 
+        //    // AddNewUser
+        //    // 
+        //    this.ClientSize = new System.Drawing.Size(284, 261);
+        //    this.Name = "AddNewUser";
+        //    this.Load += new System.EventHandler(this.AddNewUser_Load_1);
+        //    this.ResumeLayout(false);
+
+        //}
+
+        
     }
 }

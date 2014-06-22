@@ -128,5 +128,10 @@ namespace IMS
             dataGridView_products.DataSource = products;
 
         }
+
+        private void button_saveProduct_Click(object sender, EventArgs e)
+        {
+            db.SaveChanges();
+        }
     }
 }

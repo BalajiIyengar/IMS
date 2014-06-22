@@ -46,7 +46,7 @@ namespace IMS
 
             dataGridView_users.Columns["CustomerId"].Visible = false;
             dataGridView_users.Columns["Deposit"].Visible = false;
-            dataGridView_users.Columns["DailyPurchases"].Visible = false;
+            //dataGridView_users.Columns["DailyPurchases"].Visible = false;
             dataGridView_users.Columns["PhoneNumber"].Visible = false;
             dataGridView_users.Columns["EmailId"].Visible = false;
             dataGridView_users.Columns["Balance"].Visible = false;
@@ -70,6 +70,18 @@ namespace IMS
         {
             CategoriesAndProducts productCategories = new CategoriesAndProducts();
             productCategories.Show();
+        }
+
+        private void linkLabel_analytics_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Analytics analytics = new Analytics();
+            analytics.Show();
+        }
+
+        private void linkLabel_userPurchases_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            UserPurchases purchase = new UserPurchases();
+            purchase.Show();
         }
 
        

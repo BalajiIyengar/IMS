@@ -22,15 +22,30 @@ namespace IMS
         static String productName;
         static long categoryId;
         static long productId;
+        static bool isEdit;
 
         private void ProductDetails_Load(object sender, EventArgs e)
         {
+            if (isEdit)
+            {
+                button_addProductDetails.Visible = false;
+                button_editProduct.Visible = true;
+
+                if(categoryId != 0 && productId != 0)
+                {
+                    Product selected = db.Products.Where(x => x.CategoryId == categoryId && x.ProductId == productId).Single();
+                    richTextBox_productDescription.Text = selected.Product_Details;
+                    textBox_quantity.Text = selected.Quantity.ToString();
+                }
+                 
+            
+            }
             textBox_productName.Text = productName;
         }
 
         public void setProductName(Hashtable productDetails)
         {
-            productName = productDetails["ProductName"] as String;
+            ProductDetails.productName = productDetails["ProductName"] as String;
 
             Object categoryId = productDetails["CategoryId"];
             long catId = long.Parse(categoryId.ToString());
@@ -38,9 +53,18 @@ namespace IMS
             ProductDetails.categoryId = catId;
 
             Object productId = productDetails["ProductId"];
-            long prodId = long.Parse(productId.ToString());
+            long prodId = 0;
+            
+            if(productId != null)
+                prodId = long.Parse(productId.ToString());
 
             ProductDetails.productId = prodId;
+
+            Object isEdit = productDetails["ToEdit"];
+           
+            if(isEdit != null)
+            ProductDetails.isEdit = bool.Parse(isEdit.ToString());
+
         }
 
         private void button_addProductDetails_Click(object sender, EventArgs e)
@@ -80,6 +104,27 @@ namespace IMS
 
             MessageBox.Show("Added " + ProductDetails.productName + " Details Successfully","Success");
             this.Hide();
+        }
+
+        private void button_editProduct_Click(object sender, EventArgs e)
+        {
+            if( textBox_quantity.Text.Trim().Length != 0)
+            {
+                int output;
+                if(!Int32.TryParse(textBox_quantity.Text.Trim(),out output))
+                {
+                     CommonUtilities.showErrorPopUp("Please Enter Valid Quantity");
+                }
+
+               
+            }
+            Product editedProduct = db.Products.Where(x => x.CategoryId == categoryId && x.ProductId == productId).Single();
+            editedProduct.Quantity = Int32.Parse(textBox_quantity.Text.Trim());
+            editedProduct.Product_Details = richTextBox_productDescription.Text;
+
+            db.SaveChanges();
+            this.Hide();
+            CommonUtilities.showSuccessPopup("You've Successfully Updated "+ editedProduct.ProductName+"'s Details");
         }
     }
 }

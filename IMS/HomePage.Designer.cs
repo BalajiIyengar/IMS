@@ -38,12 +38,18 @@
             this.label1 = new System.Windows.Forms.Label();
             this.dataGridView_users = new System.Windows.Forms.DataGridView();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.linkLabel_analytics = new System.Windows.Forms.LinkLabel();
+            this.linkLabel_categoriesAndProducts = new System.Windows.Forms.LinkLabel();
             this.linkLabel_addProductsAndCategories = new System.Windows.Forms.LinkLabel();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.linkLabel_categoriesAndProducts = new System.Windows.Forms.LinkLabel();
+            this.linkLabel_userPurchases = new System.Windows.Forms.LinkLabel();
+            this.comboBox_month = new System.Windows.Forms.ComboBox();
+            this.comboBox_Year = new System.Windows.Forms.ComboBox();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_users)).BeginInit();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -134,6 +140,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.linkLabel_userPurchases);
+            this.groupBox2.Controls.Add(this.linkLabel_analytics);
             this.groupBox2.Controls.Add(this.linkLabel_categoriesAndProducts);
             this.groupBox2.Controls.Add(this.linkLabel_addProductsAndCategories);
             this.groupBox2.Controls.Add(this.linkLabel1);
@@ -144,10 +152,32 @@
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Links";
             // 
+            // linkLabel_analytics
+            // 
+            this.linkLabel_analytics.AutoSize = true;
+            this.linkLabel_analytics.Location = new System.Drawing.Point(48, 195);
+            this.linkLabel_analytics.Name = "linkLabel_analytics";
+            this.linkLabel_analytics.Size = new System.Drawing.Size(49, 13);
+            this.linkLabel_analytics.TabIndex = 3;
+            this.linkLabel_analytics.TabStop = true;
+            this.linkLabel_analytics.Text = "Analytics";
+            this.linkLabel_analytics.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_analytics_LinkClicked);
+            // 
+            // linkLabel_categoriesAndProducts
+            // 
+            this.linkLabel_categoriesAndProducts.AutoSize = true;
+            this.linkLabel_categoriesAndProducts.Location = new System.Drawing.Point(6, 141);
+            this.linkLabel_categoriesAndProducts.Name = "linkLabel_categoriesAndProducts";
+            this.linkLabel_categoriesAndProducts.Size = new System.Drawing.Size(149, 13);
+            this.linkLabel_categoriesAndProducts.TabIndex = 2;
+            this.linkLabel_categoriesAndProducts.TabStop = true;
+            this.linkLabel_categoriesAndProducts.Text = "View Categories and Products";
+            this.linkLabel_categoriesAndProducts.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_categoriesAndProducts_LinkClicked);
+            // 
             // linkLabel_addProductsAndCategories
             // 
             this.linkLabel_addProductsAndCategories.AutoSize = true;
-            this.linkLabel_addProductsAndCategories.Location = new System.Drawing.Point(6, 104);
+            this.linkLabel_addProductsAndCategories.Location = new System.Drawing.Point(6, 84);
             this.linkLabel_addProductsAndCategories.Name = "linkLabel_addProductsAndCategories";
             this.linkLabel_addProductsAndCategories.Size = new System.Drawing.Size(145, 13);
             this.linkLabel_addProductsAndCategories.TabIndex = 1;
@@ -166,32 +196,64 @@
             this.linkLabel1.Text = "Add New User";
             this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
-            // linkLabel_categoriesAndProducts
+            // linkLabel_userPurchases
             // 
-            this.linkLabel_categoriesAndProducts.AutoSize = true;
-            this.linkLabel_categoriesAndProducts.Location = new System.Drawing.Point(4, 189);
-            this.linkLabel_categoriesAndProducts.Name = "linkLabel_categoriesAndProducts";
-            this.linkLabel_categoriesAndProducts.Size = new System.Drawing.Size(149, 13);
-            this.linkLabel_categoriesAndProducts.TabIndex = 2;
-            this.linkLabel_categoriesAndProducts.TabStop = true;
-            this.linkLabel_categoriesAndProducts.Text = "View Categories and Products";
-            this.linkLabel_categoriesAndProducts.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_categoriesAndProducts_LinkClicked);
+            this.linkLabel_userPurchases.AutoSize = true;
+            this.linkLabel_userPurchases.Location = new System.Drawing.Point(42, 250);
+            this.linkLabel_userPurchases.Name = "linkLabel_userPurchases";
+            this.linkLabel_userPurchases.Size = new System.Drawing.Size(82, 13);
+            this.linkLabel_userPurchases.TabIndex = 4;
+            this.linkLabel_userPurchases.TabStop = true;
+            this.linkLabel_userPurchases.Text = "User Purchases";
+            this.linkLabel_userPurchases.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel_userPurchases_LinkClicked);
+            // 
+            // comboBox_month
+            // 
+            this.comboBox_month.FormattingEnabled = true;
+            this.comboBox_month.Location = new System.Drawing.Point(390, 12);
+            this.comboBox_month.Name = "comboBox_month";
+            this.comboBox_month.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_month.TabIndex = 9;
+            // 
+            // comboBox_Year
+            // 
+            this.comboBox_Year.FormattingEnabled = true;
+            this.comboBox_Year.Location = new System.Drawing.Point(539, 12);
+            this.comboBox_Year.Name = "comboBox_Year";
+            this.comboBox_Year.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_Year.TabIndex = 10;
+            // 
+            // dataGridView1
+            // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(390, 68);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.ReadOnly = true;
+            this.dataGridView1.Size = new System.Drawing.Size(561, 397);
+            this.dataGridView1.TabIndex = 11;
             // 
             // HomePage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1255, 477);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.comboBox_Year);
+            this.Controls.Add(this.comboBox_month);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.dataGridView_users);
             this.Controls.Add(this.groupBox1);
             this.Name = "HomePage";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "HomePage";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_users)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -211,6 +273,11 @@
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.LinkLabel linkLabel_addProductsAndCategories;
         private System.Windows.Forms.LinkLabel linkLabel_categoriesAndProducts;
+        private System.Windows.Forms.LinkLabel linkLabel_analytics;
+        private System.Windows.Forms.LinkLabel linkLabel_userPurchases;
+        private System.Windows.Forms.ComboBox comboBox_month;
+        private System.Windows.Forms.ComboBox comboBox_Year;
+        private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
 

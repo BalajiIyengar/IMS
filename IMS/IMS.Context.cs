@@ -27,7 +27,8 @@ namespace IMS
     
         public DbSet<Category> Categories { get; set; }
         public DbSet<CustomerDetail> CustomerDetails { get; set; }
-        public DbSet<DailyPurchase> DailyPurchases { get; set; }
+        public DbSet<DailyPurchas> DailyPurchases { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<UserPayment> UserPayments { get; set; }
     }
 }
